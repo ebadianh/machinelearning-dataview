@@ -30,4 +30,4 @@ backend/storage/
 Thumbs.db
 
 # Claude Code
-.claude/
+.claude/!backend/storage/.gitkeep
