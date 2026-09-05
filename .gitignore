@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtuell miljö
+venv/
+.venv/
+env/
+
+# Uppladdade dataset och sparade modeller (får aldrig i git)
+backend/storage/
+*.joblib
+*.pkl
+
+# Databas
+*.db
+*.sqlite
+*.sqlite3
+
+# Hemligheter
+.env
+.streamlit/secrets.toml
+
+# Editor och OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
