@@ -10,7 +10,8 @@ venv/
 env/
 
 # Uppladdade dataset och sparade modeller (får aldrig i git)
-backend/storage/
+backend/storage/*
+!backend/storage/.gitkeep
 *.joblib
 *.pkl
 
@@ -30,4 +31,4 @@ backend/storage/
 Thumbs.db
 
 # Claude Code
-.claude/!backend/storage/.gitkeep
+.claude/

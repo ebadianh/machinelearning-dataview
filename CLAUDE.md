@@ -33,9 +33,13 @@ Miljö: Python 3.11+, venv + requirements.txt, Windows med Git Bash.
 - Beroenden hanteras med **venv + requirements.txt**. Inga andra pakethanterare.
 - Tester skrivs med **pytest** och ligger i `tests/`.
 - **Pydantic-scheman för alla request- och response-kroppar**, definierade i `backend/schemas/`.
-- **Inga stora datafiler, databaser eller `.joblib`-filer i git.** Uppladdade dataset och
-  sparade modeller hamnar i `backend/storage/` som är gitignorerad. Endast det lilla
+- **Inga stora datafiler, databaser eller `.joblib`-filer i git.** Uppladdade dataset,
+  databasfilen och sparade modeller hamnar i `backend/storage/`. Själva mappen ligger i
+  git via en `.gitkeep` (`.gitignore` har `backend/storage/*` + `!backend/storage/.gitkeep`)
+  så att den finns direkt efter en klon – allt innehåll ignoreras. Endast det lilla
   syntetiska exempeldatasetet i `data/sample/` får versionshanteras.
+- Kod som skriver till `backend/storage/` ska ändå anropa `mkdir(parents=True, exist_ok=True)`
+  först, så att den fungerar även om mappen saknas.
 - Håll koden liten och läsbar; hellre en tydlig funktion än ett lager abstraktioner.
 
 ## Kommandon (Git Bash)
