@@ -1,0 +1,19 @@
+# Backend
+fastapi
+uvicorn
+pydantic
+python-multipart
+
+# Frontend
+streamlit
+requests
+
+# ML och data
+scikit-learn
+pandas
+numpy
+joblib
+
+# Tester
+pytest
+httpx
