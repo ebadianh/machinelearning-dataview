@@ -2,10 +2,11 @@
 """Semantisk sökning i LOGGBOK.md.
 
     python logg.py "varför valde vi den modellen"
-    python logg.py selftest
 
-Indexet byggs om automatiskt när LOGGBOK.md ändrats. Kräver: pip install -r requirements.txt
+Indexet byggs om automatiskt när LOGGBOK.md ändrats.
+Setup: pip install -r requirements.txt  (första körningen laddar ner modellen, ~220 MB)
 """
+import hashlib
 import pathlib
 import sys
 
@@ -28,25 +29,29 @@ def embed(texts):
     return v / np.linalg.norm(v, axis=1, keepdims=True)
 
 
-def entries(path):
-    """En loggrad = en chunk. Datumrubriken klistras på så den blir sökbar."""
+def entries(text):
+    """En loggrad = en chunk. Datumrubriken klistras på så den blir sökbar.
+    Överstrukna rader (~~...~~) är ändrade beslut och hoppas över."""
     datum, out = "", []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for line in text.splitlines():
         line = line.strip()
         if line.startswith("## "):
             datum = line[3:].strip()
-        elif line and not line.startswith("#"):
+        elif line and not line.startswith(("#", "~~")):
             out.append(f"{datum} {line}")
     return out
 
 
 def load(log, cache):
-    if cache.exists() and cache.stat().st_mtime >= log.stat().st_mtime:
+    raw = log.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    if cache.exists():
         d = np.load(cache, allow_pickle=True)
-        return list(d["rows"]), d["vecs"]
-    rows = entries(log)
+        if "hash" in d.files and str(d["hash"]) == digest:
+            return list(d["rows"]), d["vecs"]
+    rows = entries(raw.decode("utf-8"))
     vecs = embed(rows) if rows else np.zeros((0, 1))
-    np.savez(cache, rows=np.array(rows, dtype=object), vecs=vecs)
+    np.savez(cache, rows=np.array(rows, dtype=object), vecs=vecs, hash=digest)
     return rows, vecs
 
 
@@ -58,30 +63,12 @@ def search(query, k=5, log=LOG, cache=CACHE):
     return [(float(score[i]), rows[i]) for i in np.argsort(-score)[:k]]
 
 
-def selftest():
-    import tempfile
-    with tempfile.TemporaryDirectory() as d:
-        log, cache = pathlib.Path(d) / "L.md", pathlib.Path(d) / "i.npz"
-        log.write_text(
-            "## 2026-01-01\n"
-            "**Beslut** kör XGBoost istället för logistisk regression — bättre AUC (lukas)\n"
-            "**Beslut** droppar kolumnen Diagnosis från features — läckage (sara)\n"
-            "**Byggt** notebook som plottar ålder mot sjukdomsrisk\n",
-            encoding="utf-8",
-        )
-        hits = search("vilken modell valde vi", log=log, cache=cache)
-        assert "XGBoost" in hits[0][1], hits
-        assert cache.exists()
-        assert search("vilken modell valde vi", log=log, cache=cache)[0][1] == hits[0][1]
-    print("selftest ok")
-
-
 if __name__ == "__main__":
+    # ponytail: Windows-konsolen är cp1252 och loggen är full av åäö och tankstreck
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     arg = " ".join(sys.argv[1:])
-    if arg == "selftest":
-        selftest()
-    elif arg:
+    if not arg:
+        print(__doc__)
+    else:
         for s, row in search(arg):
             print(f"{s:.2f}  {row}")
-    else:
-        print(__doc__)

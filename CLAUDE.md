@@ -19,11 +19,12 @@ En rad per post, prefix: **Beslut** / **Byggt** / **Problem** / **Kvar**.
 - Vem-fältet: `(lukas)` för människa, `(agent/lukas)` när en agent bestämde.
 - Viktiga agentsamtal loggas som slutsatsen i en Beslut-rad, aldrig som transkript.
 
-Redigera aldrig gamla rader. Ändrat beslut = ny rad idag + stryk den gamla med `~~ ~~` och skriv `→ ändrat ÅÅ-MM-DD`.
+Redigera aldrig gamla rader. Ändrat beslut = ny rad idag + stryk den gamla med `~~ ~~` runt hela raden och skriv `→ ändrat ÅÅ-MM-DD`. Överstrukna rader hoppas över av sökningen.
 
 Max en rad per post. Inga rubriker under dagen. Ingen kodstruktur, inga filnamn-listor, inga resonemang. Dagar utan händelse skrivs inte.
 
 ## Sökning (RAG)
 `logg.py` embeddar varje loggrad och söker semantiskt — du hittar beslut även när du
 inte gissar samma ord som skrevs. Indexet (`.logg_index.npz`) är lokalt och byggs om
-automatiskt när `LOGGBOK.md` ändrats. Setup en gång: `pip install -r requirements.txt`.
+automatiskt när `LOGGBOK.md` ändrats. Setup en gång: `pip install -r requirements.txt`
+(första körningen laddar ner modellen, ~220 MB). Ändrar du `logg.py`: kör `python test_logg.py`.
