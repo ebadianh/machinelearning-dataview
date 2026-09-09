@@ -6,6 +6,8 @@ import subprocess
 import sys
 import tempfile
 
+import numpy as np
+
 import logg
 
 LOGG = """# Loggbok
@@ -17,6 +19,8 @@ LOGG = """# Loggbok
 **Beslut** droppar kolumnen Diagnosis från features — läckage (sara)
 **Byggt** notebook som plottar ålder mot sjukdomsrisk
 """
+
+NY_RAD = "**Beslut** använder SMOTE mot klassobalans (ali)"
 
 
 def tmp(text):
@@ -102,6 +106,37 @@ def test_cli_klarar_windowskonsol():
     )
     assert p.returncode == 0, p.stderr
     assert "XGBoost" in p.stdout, p.stdout
+
+
+def test_index_ar_inkrementellt():
+    """En ny loggrad far inte kosta omindexering av hela loggboken."""
+    log, cache = tmp(LOGG)
+    logg.search("vilken modell valde vi", log=log, cache=cache)
+    riktig, kallade = logg.embed, []
+    logg.embed = lambda t: (kallade.append(list(t)), riktig(t))[1]
+    try:
+        log.write_text(LOGG + NY_RAD + "\n", encoding="utf-8")
+        hits = logg.search("hur hanterade vi obalans mellan klasserna", log=log, cache=cache)
+    finally:
+        logg.embed = riktig
+    indexerade = [t for t in kallade if any("SMOTE" in x for x in t)]
+    assert indexerade == [["2026-01-01 " + NY_RAD]], kallade
+    assert any("SMOTE" in row for _, row in hits), hits
+    assert any("XGBoost" in row for _, row in hits), "gamla rader ska finnas kvar"
+
+
+def test_modellbyte_bygger_om_indexet():
+    """Vektorer fran en annan modell har fel dimension och far inte ateranvandas."""
+    log, cache = tmp(LOGG)
+    logg.search("vilken modell valde vi", log=log, cache=cache)
+    riktig = logg.MODEL
+    logg.MODEL = "nagon-annan-modell"
+    try:
+        rows, vecs = logg.load(log, cache)
+        assert len(rows) == len(vecs) == 3, (rows, vecs.shape)
+        assert str(np.load(cache, allow_pickle=True)["modell"]) == "nagon-annan-modell"
+    finally:
+        logg.MODEL = riktig
 
 
 if __name__ == "__main__":

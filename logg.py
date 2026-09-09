@@ -6,7 +6,6 @@
 Indexet byggs om automatiskt när LOGGBOK.md ändrats.
 Setup: pip install -r requirements.txt  (första körningen laddar ner modellen, ~220 MB)
 """
-import hashlib
 import pathlib
 import sys
 
@@ -43,15 +42,20 @@ def entries(text):
 
 
 def load(log, cache):
-    raw = log.read_bytes()
-    digest = hashlib.sha256(raw).hexdigest()
+    """Bara nya rader embeddas — annars skulle varje ny loggrad kosta en omindexering
+    av hela loggboken, och den kostnaden vaxer for varje dag."""
+    rows = entries(log.read_text(encoding="utf-8"))
+    cachad = {}
     if cache.exists():
         d = np.load(cache, allow_pickle=True)
-        if "hash" in d.files and str(d["hash"]) == digest:
-            return list(d["rows"]), d["vecs"]
-    rows = entries(raw.decode("utf-8"))
-    vecs = embed(rows) if rows else np.zeros((0, 1))
-    np.savez(cache, rows=np.array(rows, dtype=object), vecs=vecs, hash=digest)
+        if "modell" in d.files and str(d["modell"]) == MODEL:
+            cachad = dict(zip(list(d["rows"]), d["vecs"]))
+    nya = [r for r in rows if r not in cachad]
+    if nya:
+        cachad.update(zip(nya, embed(nya)))
+    vecs = np.array([cachad[r] for r in rows]) if rows else np.zeros((0, 1))
+    if nya or not cache.exists():
+        np.savez(cache, rows=np.array(rows, dtype=object), vecs=vecs, modell=MODEL)
     return rows, vecs
 
 
