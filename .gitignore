@@ -31,3 +31,5 @@ Thumbs.db
 
 # Claude Code
 .claude/
+# Loggbok-index (byggs lokalt)
+.logg_index.npz
