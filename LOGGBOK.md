@@ -1,6 +1,9 @@
 # Loggbok
 
 ## 2026-09-14
+**Beslut** vi arbetar mot en klassisk labbrapport nästlad i uppgiftens fyra obligatoriska rubriker — labbrapportens delar får plats i dem och det är rubrikerna som rättas — bortvalt: ersätta rubrikerna med Syfte/Metod/Resultat/Diskussion (lukas)
+**Beslut** hypotes och metod frysas nu medan resultatdelen hålls öppen — vad vi tror och hur vi mätte beror inte på UI-flödet, bara presentationen av resultaten gör det — bortvalt: vänta med hela rapportstrukturen (agent/lukas)
+**Kvar** rapportens resultatdel väntar på att UI-flödet i Streamlit-appen är bestämt
 **Beslut** rapporten skrivs som markdown i repot under rapport/ — tre personer kan skriva parallellt med vanlig git-hantering och den versionshanteras tillsammans med koden — bortvalt: Word, PDF utanför git (lukas)
 **Beslut** rapportens tre första sektioner hämtas ur FINDINGS.md, men utvärderingen av grupparbetet hämtas ur LOGGBOK.md — vem-fältet och Beslut-raderna är enda källan som faktiskt dokumenterar hur gruppen arbetat — bortvalt: skriva grupputvärderingen ur minnet (agent/lukas)
 **Kvar** ta reda på om figurer räknas in i rapportens ~3 sidor — frågan går till läraren
