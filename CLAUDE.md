@@ -1,7 +1,7 @@
 # CLAUDE.md — machinelearning-dataview
 
 Den här filen innehåller **bara regler**. Beslutens motiveringar och projektets historik
-finns i `LOGGBOK.md`, återstående arbete i GitHub Projects, fynd och siffror i `FINDINGS.md`.
+finns i `LOGGBOK.md`, återstående arbete i GitHub Projects, fynd och siffror i `FINDINGS.md` (byggs — se issue #9).
 
 ## Innan du börjar arbeta
 1. `git pull`
