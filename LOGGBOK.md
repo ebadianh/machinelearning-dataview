@@ -1,6 +1,14 @@
 # Loggbok
 
 ## 2026-09-14
+**Beslut** nya backlog-kort skrivs onumrerade — numren sitter i issue-titlarna så ett nytt nummer hade tvingat fram omdöpning av hela sekvensen 1–7 — bortvalt: numrera om 1–7, sätta testet som "8." (agent/havash)
+**Beslut** testet som låser fast experimentens accuracy-siffror skjuts upp till efter korsvalideringen — siffrorna ändras när #3 landar och ett rött test hade då beskrivit något vi medvetet bytt ut — bortvalt: testa 0,947 och 0,942 nu (agent/havash)
+**Beslut** testet byggs på grenen feature/test, inte i main — vi bygger inte i main — bortvalt: commit direkt på main (havash)
+**Byggt** test_features.py — 5 tester som vaktar att featurelistorna matchar databasens kolumner och att PatientID och Diagnosis aldrig blir features, alla verifierade att falla när regeln de vaktar bryts (#35)
+**Byggt** Done-kolumnen efterregistrerad på board 6 — 10 kort för arbete som redan var gjort (#11, #25–#30, #32–#34)
+**Problem** två boards följer samma issues — ebadianh/6 (dataview-kanban) och LukWen-Ill/11 (KK2) — allt nytt ligger bara på 6 och board 11 står kvar med #2–#10 i Todo
+**Kvar** smoke-test av README:s körsteg från tom klon — föreslaget, inte upplagt som issue
+**Kvar** vem-fältets regel i CLAUDE.md namnger bara lukas — gruppen är tre personer och raderna ovan är skrivna som (agent/havash)
 **Beslut** vi arbetar mot en klassisk labbrapport nästlad i uppgiftens fyra obligatoriska rubriker — labbrapportens delar får plats i dem och det är rubrikerna som rättas — bortvalt: ersätta rubrikerna med Syfte/Metod/Resultat/Diskussion (lukas)
 **Beslut** hypotes och metod frysas nu medan resultatdelen hålls öppen — vad vi tror och hur vi mätte beror inte på UI-flödet, bara presentationen av resultaten gör det — bortvalt: vänta med hela rapportstrukturen (agent/lukas)
 **Kvar** rapportens resultatdel väntar på att UI-flödet i Streamlit-appen är bestämt
