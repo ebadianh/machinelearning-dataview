@@ -15,7 +15,6 @@ from src.features import FEATURE_SETS, TARGET
 MODELS = {
     "forest": lambda: RandomForestClassifier(random_state=42),
     # SVM mäter avstånd -> måste skalas. StandardScaler ligger INUTI pipen
-    # så att fit_transform bara ser träningsdatan (kap 4:9).
     "svm": lambda: make_pipeline(StandardScaler(), SVC(random_state=42)),
 }
 
