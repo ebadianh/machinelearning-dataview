@@ -12,6 +12,7 @@
 **Beslut** PatientID får aldrig bli feature — korrelationen 0,041 är en artefakt av radordningen, inte signal — bortvalt: ta med den som vanlig kolumn — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
 **Beslut** dementia_patients_health_data.csv förkastades till förmån för alzheimers_disease_data.csv — Prescription och Dosage separerar klasserna till 100 % vilket är grovt läckage — bortvalt: dementia_patients_health_data.csv — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
 **Beslut** återstående arbete flyttas till GitHub Projects i stället för en lista i CLAUDE.md — tre personer som redigerar samma lista ger merge-konflikter och boarden visar vem som tagit vad — bortvalt: att göra-lista i CLAUDE.md (agent/lukas)
+**Byggt** 9 issues i ebadianh/machinelearning-dataview + board https://github.com/users/LukWen-Ill/projects/11 (publik)
 
 ## 2026-09-09
 **Beslut** stannar på MiniLM-modellen — en sökning tar 3,2 s mot mpnets 5,7 s och latens väger tyngre än träffkvalitet här — bortvalt: mpnet (7/8 mot 5/8 rätt i topp-3, men +2,5 s per sökning) (agent/lukas)
