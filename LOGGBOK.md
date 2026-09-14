@@ -1,6 +1,13 @@
 # Loggbok
 
 ## 2026-09-14
+**Beslut** vi arbetar mot en klassisk labbrapport nästlad i uppgiftens fyra obligatoriska rubriker — labbrapportens delar får plats i dem och det är rubrikerna som rättas — bortvalt: ersätta rubrikerna med Syfte/Metod/Resultat/Diskussion (lukas)
+**Beslut** hypotes och metod frysas nu medan resultatdelen hålls öppen — vad vi tror och hur vi mätte beror inte på UI-flödet, bara presentationen av resultaten gör det — bortvalt: vänta med hela rapportstrukturen (agent/lukas)
+**Kvar** rapportens resultatdel väntar på att UI-flödet i Streamlit-appen är bestämt
+**Beslut** rapporten skrivs som markdown i repot under rapport/ — tre personer kan skriva parallellt med vanlig git-hantering och den versionshanteras tillsammans med koden — bortvalt: Word, PDF utanför git (lukas)
+**Beslut** rapportens tre första sektioner hämtas ur FINDINGS.md, men utvärderingen av grupparbetet hämtas ur LOGGBOK.md — vem-fältet och Beslut-raderna är enda källan som faktiskt dokumenterar hur gruppen arbetat — bortvalt: skriva grupputvärderingen ur minnet (agent/lukas)
+**Kvar** ta reda på om figurer räknas in i rapportens ~3 sidor — frågan går till läraren
+**Kvar** fördela rapportens fyra sektioner på gruppens tre personer
 **Beslut** merge-konflikten i CLAUDE.md löstes genom att slå ihop båda sidorna — main-versionens projektdokumentation och loggbokreglerna beskriver olika saker och båda behövs — bortvalt: välja en sida (agent/lukas)
 **Beslut** CLAUDE.md innehåller hädanefter bara regler — historik hör hemma i loggboken, återstående arbete i GitHub Projects och fynd i FINDINGS.md, och ett dokument som kräver manuell synk varje arbetspass ruttnar — bortvalt: behålla resultat-, att göra- och fyndavsnitten i CLAUDE.md (agent/lukas)
 **Beslut** experimentdesignen tränar samma modell på fem featureset mot en baslinje — en enda modell på alla kolumner kan aldrig visa om livsstil bär egen signal — bortvalt: en modell på alla kolumner — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
