@@ -1,0 +1,29 @@
+# Loggbok
+
+## 2026-09-14
+**Beslut** merge-konflikten i CLAUDE.md löstes genom att slå ihop båda sidorna — main-versionens projektdokumentation och loggbokreglerna beskriver olika saker och båda behövs — bortvalt: välja en sida (agent/lukas)
+**Beslut** CLAUDE.md innehåller hädanefter bara regler — historik hör hemma i loggboken, återstående arbete i GitHub Projects och fynd i FINDINGS.md, och ett dokument som kräver manuell synk varje arbetspass ruttnar — bortvalt: behålla resultat-, att göra- och fyndavsnitten i CLAUDE.md (agent/lukas)
+**Beslut** experimentdesignen tränar samma modell på fem featureset mot en baslinje — en enda modell på alla kolumner kan aldrig visa om livsstil bär egen signal — bortvalt: en modell på alla kolumner — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** databasen är SQLite — publikt repo plus service account-nyckel blir permanent läckage i git-historiken och datan är en platt tabell, inte dokument — bortvalt: Firebase, Firestore, Supabase — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** genererade artefakter committas inte (*.db, *.joblib) — binärfiler ger olösbara merge-konflikter mellan tre personer och README har körstegen i stället — bortvalt: undantag för dementia.db i .gitignore — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** Age behålls trots noll-korrelation — att stryka features som inte ger önskat resultat är metodfel och noll-korrelationen är projektets starkaste fynd — bortvalt: droppa Age — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** EducationLevel räknas som demografi, inte livsstil — utbildningsnivå är strukturellt och inte ett dagligt val — bortvalt: lägga den i livsstil — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** CSV:n läses exakt en gång, av database.py, all annan kod går via load_data() — en väg in i datan gör att alla kör mot samma tabell — bortvalt: pd.read_csv på flera ställen — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** PatientID får aldrig bli feature — korrelationen 0,041 är en artefakt av radordningen, inte signal — bortvalt: ta med den som vanlig kolumn — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** dementia_patients_health_data.csv förkastades till förmån för alzheimers_disease_data.csv — Prescription och Dosage separerar klasserna till 100 % vilket är grovt läckage — bortvalt: dementia_patients_health_data.csv — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** återstående arbete flyttas till GitHub Projects i stället för en lista i CLAUDE.md — tre personer som redigerar samma lista ger merge-konflikter och boarden visar vem som tagit vad — bortvalt: att göra-lista i CLAUDE.md (agent/lukas)
+**Byggt** 9 issues i ebadianh/machinelearning-dataview + board https://github.com/users/LukWen-Ill/projects/11 (publik)
+
+## 2026-09-09
+**Beslut** stannar på MiniLM-modellen — en sökning tar 3,2 s mot mpnets 5,7 s och latens väger tyngre än träffkvalitet här — bortvalt: mpnet (7/8 mot 5/8 rätt i topp-3, men +2,5 s per sökning) (agent/lukas)
+**Beslut** indexet uppdateras inkrementellt, bara nya rader embeddas — full omindexering kostade 37 s vid 500 rader och skulle utlösas av varje ny loggrad — bortvalt: full omindexering, daemon som håller modellen varm (agent/lukas)
+**Beslut** datum och prefix skickas med till modellen — mätning visar att prefixet höjer träffsäkerheten (6/8 mot 4/8) och datumet inte stör mätbart, dessutom går det då att söka på datum — bortvalt: skicka bara innehållet (agent/lukas)
+**Byggt** inkrementell indexering + modellnamn i cachen, 10 tester totalt
+**Problem** författare och skrivstil påverkar inte sökningen (0,96 för samma innehåll av olika personer mot 0,36 för olika innehåll av samma person)
+**Beslut** överstrukna rader indexeras inte — ett ändrat beslut fick annars komma tillbaka som topträff och styra en agent fel — bortvalt: indexera allt och lita på att agenten läser `→ ändrat` (agent/lukas)
+**Beslut** cachen jämför sha256 av LOGGBOK.md i stället för mtime — en agent som skriver en rad och söker direkt fick annars gamla träffar — bortvalt: mtime, alltid bygga om (agent/lukas)
+**Byggt** `test_logg.py`, 8 tester utan ramverk; tre av dem verifierade att falla när sin fix tas bort
+**Problem** cp1252 klarar åäö och tankstreck men inte `→`, så CLI:t kraschade på överstrukna rader — löst med `sys.stdout.reconfigure`
+**Beslut** loggboken är en markdownfil i repot med semantisk sökning via `logg.py` — git är redan delat mellan oss tre och kräver ingen drift — bortvalt: riktig databas, vektordatabas, LangChain — (agent/lukas)
+**Beslut** embeddings via fastembed + paraphrase-multilingual-MiniLM-L12-v2 — träffade 5/5 testfrågor på svenska mot model2vec 3/5, och kräver inte torch — bortvalt: model2vec, sentence-transformers, embedding-API — (agent/lukas)
+**Byggt** `logg.py` med `search` + `selftest`, index cachat i `.logg_index.npz`
