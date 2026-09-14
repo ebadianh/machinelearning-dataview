@@ -2,6 +2,16 @@
 
 ## 2026-09-14
 **Beslut** merge-konflikten i CLAUDE.md löstes genom att slå ihop båda sidorna — main-versionens projektdokumentation och loggbokreglerna beskriver olika saker och båda behövs — bortvalt: välja en sida (agent/lukas)
+**Beslut** CLAUDE.md innehåller hädanefter bara regler — historik hör hemma i loggboken, återstående arbete i GitHub Projects och fynd i FINDINGS.md, och ett dokument som kräver manuell synk varje arbetspass ruttnar — bortvalt: behålla resultat-, att göra- och fyndavsnitten i CLAUDE.md (agent/lukas)
+**Beslut** experimentdesignen tränar samma modell på fem featureset mot en baslinje — en enda modell på alla kolumner kan aldrig visa om livsstil bär egen signal — bortvalt: en modell på alla kolumner — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** databasen är SQLite — publikt repo plus service account-nyckel blir permanent läckage i git-historiken och datan är en platt tabell, inte dokument — bortvalt: Firebase, Firestore, Supabase — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** genererade artefakter committas inte (*.db, *.joblib) — binärfiler ger olösbara merge-konflikter mellan tre personer och README har körstegen i stället — bortvalt: undantag för dementia.db i .gitignore — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** Age behålls trots noll-korrelation — att stryka features som inte ger önskat resultat är metodfel och noll-korrelationen är projektets starkaste fynd — bortvalt: droppa Age — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** EducationLevel räknas som demografi, inte livsstil — utbildningsnivå är strukturellt och inte ett dagligt val — bortvalt: lägga den i livsstil — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** CSV:n läses exakt en gång, av database.py, all annan kod går via load_data() — en väg in i datan gör att alla kör mot samma tabell — bortvalt: pd.read_csv på flera ställen — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** PatientID får aldrig bli feature — korrelationen 0,041 är en artefakt av radordningen, inte signal — bortvalt: ta med den som vanlig kolumn — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** dementia_patients_health_data.csv förkastades till förmån för alzheimers_disease_data.csv — Prescription och Dosage separerar klasserna till 100 % vilket är grovt läckage — bortvalt: dementia_patients_health_data.csv — importerat från CLAUDE.md, ursprungsdatum okänt (lukas)
+**Beslut** återstående arbete flyttas till GitHub Projects i stället för en lista i CLAUDE.md — tre personer som redigerar samma lista ger merge-konflikter och boarden visar vem som tagit vad — bortvalt: att göra-lista i CLAUDE.md (agent/lukas)
 
 ## 2026-09-09
 **Beslut** stannar på MiniLM-modellen — en sökning tar 3,2 s mot mpnets 5,7 s och latens väger tyngre än träffkvalitet här — bortvalt: mpnet (7/8 mot 5/8 rätt i topp-3, men +2,5 s per sökning) (agent/lukas)
