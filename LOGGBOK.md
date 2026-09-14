@@ -1,5 +1,8 @@
 # Loggbok
 
+## 2026-09-14
+**Beslut** merge-konflikten i CLAUDE.md löstes genom att slå ihop båda sidorna — main-versionens projektdokumentation och loggbokreglerna beskriver olika saker och båda behövs — bortvalt: välja en sida (agent/lukas)
+
 ## 2026-09-09
 **Beslut** stannar på MiniLM-modellen — en sökning tar 3,2 s mot mpnets 5,7 s och latens väger tyngre än träffkvalitet här — bortvalt: mpnet (7/8 mot 5/8 rätt i topp-3, men +2,5 s per sökning) (agent/lukas)
 **Beslut** indexet uppdateras inkrementellt, bara nya rader embeddas — full omindexering kostade 37 s vid 500 rader och skulle utlösas av varje ny loggrad — bortvalt: full omindexering, daemon som håller modellen varm (agent/lukas)
